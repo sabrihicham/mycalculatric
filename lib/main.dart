@@ -9,13 +9,22 @@ void main() {
 
     @override
     Widget build(BuildContext context) {
-      return Scaffold(
-        body: Column(
-          children: [
-           Container(
-             color: Colors.brown,
-           ),
-          ],
+      return MaterialApp(
+        home: Scaffold(
+          body: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.pink,
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.green,
+                ),
+              )
+            ],
+          )
         ),
       );
     }
