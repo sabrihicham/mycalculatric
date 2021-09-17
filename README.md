@@ -1,6 +1,6 @@
 # mycalculatric
 
-A new Flutter project.
+Creating Samsaung Calculator with flutter.
 
 ## Getting Started
 
