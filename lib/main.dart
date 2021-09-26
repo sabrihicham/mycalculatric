@@ -53,7 +53,7 @@ class _CalculatorState extends State<Calculator> {
           Padding(
               padding: const EdgeInsets.fromLTRB(0, 5, 15, 2),
               child:
-                  Align(alignment: Alignment.centerRight, child: Text(input_))),
+              Align(alignment: Alignment.centerRight, child: Text(input_))),
           Padding(
               padding: const EdgeInsets.fromLTRB(0, 5, 15, 10),
               child: Align(
@@ -68,12 +68,12 @@ class _CalculatorState extends State<Calculator> {
   //Button Widget
   Widget myButton(
       {Color color = grey, //Button Color
-      Color textColor = green, //Text Color
-      String text = "", //set text to Button
-      @required onpressed, //Action
-      int fontSize = 37, //Text Size
-      int height = 80, //Button Height
-      int width = 80 //Button Width
+        Color textColor = green, //Text Color
+        String text = "", //set text to Button
+        @required onpressed, //Action
+        int fontSize = 37, //Text Size
+        int height = 80, //Button Height
+        int width = 80 //Button Width
       }) {
     return RawMaterialButton(
       constraints: BoxConstraints(
@@ -151,7 +151,7 @@ class _CalculatorState extends State<Calculator> {
                               size: 20,
                             ),
                             onPressed: () => setState(() =>
-                                input = input.substring(0, max(input.length - 1, 0))),
+                            input = input.substring(0, max(input.length - 1, 0))),
                           )
                         ],
                       ),
@@ -295,33 +295,6 @@ class _CalculatorState extends State<Calculator> {
               ],
             ),
           ),
-=======
-void main() {
-  runApp(const MyApp());
-}
-
-  class MyApp extends StatelessWidget {
-    const MyApp({Key? key}) : super(key: key);
-
-    @override
-    Widget build(BuildContext context) {
-      return MaterialApp(
-        home: Scaffold(
-          body: Column(
-            children: [
-              Expanded(
-                child: Container(
-                  color: Colors.pink,
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.green,
-                ),
-              )
-            ],
-          )
-
         ),
       ),
     );
