@@ -17,7 +17,7 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  int indexer = 0, count = 0;
+  int indexer = 0;
 
   List<Widget> history = []; //History of operations
 
@@ -217,8 +217,8 @@ class _CalculatorState extends State<Calculator> {
                                                   ? () {
                                                       bool isOperator(
                                                           String s) {
-                                                        if (s == "*" ||
-                                                            s == "/" ||
+                                                        if (s == "x" ||
+                                                            s == "÷" ||
                                                             s == "-" ||
                                                             s == "+" ||
                                                             s == "(")
@@ -227,6 +227,11 @@ class _CalculatorState extends State<Calculator> {
                                                       }
 
                                                       setState(() {
+                                                        int count=0;
+                                                        for (int i=0;i<input.length;++i){
+                                                          if(input[i]=="(") count++;
+                                                          if(input[i]==")") count--;
+                                                        }
                                                         if (input.isEmpty ||
                                                             isOperator(input[
                                                                 input.length -
@@ -239,7 +244,7 @@ class _CalculatorState extends State<Calculator> {
                                                                 input.length -
                                                                     1]) &&
                                                             count == 0) {
-                                                          input += "*(";
+                                                          input += "x(";
                                                           count++;
                                                           return;
                                                         }
