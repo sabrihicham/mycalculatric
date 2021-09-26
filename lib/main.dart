@@ -17,7 +17,7 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  int indexer = 0;
+  int indexer = 0, count = 0;
 
   List<Widget> history = []; //History of operations
 
@@ -53,7 +53,7 @@ class _CalculatorState extends State<Calculator> {
           Padding(
               padding: const EdgeInsets.fromLTRB(0, 5, 15, 2),
               child:
-              Align(alignment: Alignment.centerRight, child: Text(input_))),
+                  Align(alignment: Alignment.centerRight, child: Text(input_))),
           Padding(
               padding: const EdgeInsets.fromLTRB(0, 5, 15, 10),
               child: Align(
@@ -68,12 +68,12 @@ class _CalculatorState extends State<Calculator> {
   //Button Widget
   Widget myButton(
       {Color color = grey, //Button Color
-        Color textColor = green, //Text Color
-        String text = "", //set text to Button
-        @required onpressed, //Action
-        int fontSize = 37, //Text Size
-        int height = 80, //Button Height
-        int width = 80 //Button Width
+      Color textColor = green, //Text Color
+      String text = "", //set text to Button
+      @required onpressed, //Action
+      int fontSize = 37, //Text Size
+      int height = 80, //Button Height
+      int width = 80 //Button Width
       }) {
     return RawMaterialButton(
       constraints: BoxConstraints(
@@ -150,8 +150,8 @@ class _CalculatorState extends State<Calculator> {
                               color: green,
                               size: 20,
                             ),
-                            onPressed: () => setState(() =>
-                            input = input.substring(0, max(input.length - 1, 0))),
+                            onPressed: () => setState(() => input =
+                                input.substring(0, max(input.length - 1, 0))),
                           )
                         ],
                       ),
@@ -169,9 +169,9 @@ class _CalculatorState extends State<Calculator> {
                     decoration: const BoxDecoration(
                         border: Border(
                             top: BorderSide(
-                              color: Colors.grey,
-                              width: 0.3,
-                            ))),
+                      color: Colors.grey,
+                      width: 0.3,
+                    ))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -184,54 +184,94 @@ class _CalculatorState extends State<Calculator> {
                               //Keys
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: List.generate(
                                           5,
-                                              (index) => myButton(
+                                          (index) => myButton(
                                               textColor: index == 0
                                                   ? Colors.red
                                                   : black,
                                               text: leftSide[index],
                                               onpressed: index == 0
                                                   ? () => setState(() =>
-                                              {input = "", output = ""})
+                                                      {input = "", output = ""})
                                                   : () => setState(() {
-                                                input +=
-                                                leftSide[index];
-                                                output = result(input);
-                                              })))),
+                                                        input +=
+                                                            leftSide[index];
+                                                        output = result(input);
+                                                      })))),
                                   Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: List.generate(
                                           5,
-                                              (index) => myButton(
+                                          (index) => myButton(
                                               textColor:
-                                              index == 0 ? green : black,
+                                                  index == 0 ? green : black,
                                               text: leftSide[5 + index],
-                                              onpressed: () => setState(() {
-                                                input +=
-                                                leftSide[5 + index];
-                                                output = result(input);
-                                              })))),
+                                              onpressed: index == 0
+                                                  ? () {
+                                                      bool isOperator(
+                                                          String s) {
+                                                        if (s == "*" ||
+                                                            s == "/" ||
+                                                            s == "-" ||
+                                                            s == "+" ||
+                                                            s == "(")
+                                                          return true;
+                                                        return false;
+                                                      }
+
+                                                      setState(() {
+                                                        if (input.isEmpty ||
+                                                            isOperator(input[
+                                                                input.length -
+                                                                    1])) {
+                                                          input += "(";
+                                                          count++;
+                                                          return;
+                                                        }
+                                                        if (!isOperator(input[
+                                                                input.length -
+                                                                    1]) &&
+                                                            count == 0) {
+                                                          input += "*(";
+                                                          count++;
+                                                          return;
+                                                        }
+                                                        if (!isOperator(input[
+                                                                input.length -
+                                                                    1]) &&
+                                                            count > 0) {
+                                                          input += ")";
+                                                          count--;
+                                                          return;
+                                                        }
+                                                      });
+                                                    }
+                                                  : () => setState(() {
+                                                        input +=
+                                                            leftSide[5 + index];
+                                                        output = result(input);
+                                                      })))),
                                   Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: List.generate(
                                           5,
-                                              (index) => myButton(
+                                          (index) => myButton(
                                               textColor:
-                                              index == 0 ? green : black,
+                                                  index == 0 ? green : black,
                                               text: leftSide[10 + index],
                                               onpressed: () => setState(() {
-                                                input +=
-                                                leftSide[10 + index];
-                                                output = result(input);
-                                              }))))
+                                                    input +=
+                                                        leftSide[10 + index];
+                                                    output = result(input);
+                                                  }))))
                                 ],
                               ),
                               //History
@@ -239,11 +279,11 @@ class _CalculatorState extends State<Calculator> {
                                   decoration: const BoxDecoration(
                                       border: Border(
                                           right: BorderSide(
-                                            color: Colors.grey,
-                                            width: 0.3,
-                                          ))),
+                                    color: Colors.grey,
+                                    width: 0.3,
+                                  ))),
                                   margin:
-                                  const EdgeInsets.fromLTRB(0, 0, 15, 10),
+                                      const EdgeInsets.fromLTRB(0, 0, 15, 10),
                                   alignment: Alignment.center,
                                   child: Column(children: [
                                     Expanded(
@@ -274,19 +314,19 @@ class _CalculatorState extends State<Calculator> {
                                     textColor: Colors.white,
                                     text: rightSide[index],
                                     onpressed: () => setState(() {
-                                      if (output != "") {
-                                        history.add(detailBox(
-                                            input_: input,
-                                            output_: output));
-                                        input = output;
-                                      }
-                                      output = "";
-                                    }));
+                                          if (output != "") {
+                                            history.add(detailBox(
+                                                input_: input,
+                                                output_: output));
+                                            input = output;
+                                          }
+                                          output = "";
+                                        }));
                               }
                               return myButton(
                                   text: rightSide[index],
                                   onpressed: () => setState(
-                                          () => input += rightSide[index]));
+                                      () => input += rightSide[index]));
                             })),
                       ],
                     ),
