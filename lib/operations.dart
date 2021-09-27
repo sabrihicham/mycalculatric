@@ -35,7 +35,7 @@ int priority(String s) {
   } else if (s == "*" || s == "/") {
     return 2;
   } else {
-    return -1;
+    return 3;
   }
 }
 
@@ -77,7 +77,7 @@ String calculate(double b, double a, String o) {
     case "/":
       return (a / b).toString();
     case "%":
-      return (a % b).toString();
+      return (a / b).toString();
   }
   throw "Hahaaa";
 }
