@@ -91,7 +91,9 @@ String result(String calc) {
   Stack<String> opr = Stack<String>();
   String str = "";
 
-  calc = calc.replaceAll("x", "*").replaceAll("÷", "/");
+  calc = calc.replaceAll("x", "*").replaceAll("÷", "/").replaceAll("%","%100");
+  
+  if(calc[0] == "-") {str += "-"; calc = calc.replaceRange(0,min(1,calc.length),"");}
 
   for (int i = 0; i < calc.length; ++i) {
     if (calc[i] == "(") {
