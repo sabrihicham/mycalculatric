@@ -1,4 +1,5 @@
 import "dart:collection" show Queue;
+import 'dart:math';
 
 class Stack<T> {
   final _stack = Queue<T>();
