@@ -23,10 +23,11 @@ class _CalculatorState extends State<Calculator> {
 
   List<Widget> history = []; //History of operations
 
-  List<String> leftSide = ["C","7","4","1","+/-","( )","8","5","2","0","%","9","6","3","."];
+  List<String> leftSide = ["C", "7", "4","1","+/-","( )","8","5","2","0","%","9","6","3","."];
   List<String> rightSide = ["÷", "x", "-", "+", "="];
 
-  void switcher() => setState(() => indexer = indexer == 0 ? 1 : 0); //Histoy and Keypad indexer 
+  void switcher() => setState(
+      () => indexer = indexer == 0 ? 1 : 0); //Histoy and Keypad indexer
 
   ///History Detail Box
   ///[ detailBox(input_ 'Operation', output_ 'Result') ]
@@ -70,19 +71,36 @@ class _CalculatorState extends State<Calculator> {
   ///Add Operator
   void addOpr(String str) => setState(() {
         if (input.isNotEmpty && !isOperator(input[input.length - 1])) input += str;
-        if (input.isNotEmpty && isOperator(input[input.length - 1])) input = input.replaceRange(input.length - 1, input.length, str); return;
+        if (input.isNotEmpty && isOperator(input[input.length - 1])) input = input.replaceRange(input.length - 1, input.length, str);
+        return;
       });
-  
+
   //Add Negative
-  void negative() => setState((){
-    if(input.endsWith("(-")){ input = input.replaceRange(input.length-2,input.length,""); return;}
-    if(input.isEmpty || (input.isNotEmpty && isOperator(input[input.length-1]))){ input += "(-"; return;}
-    if(!isOperator(input[input.length-1])){
-      int i = input.length - 1;
-      while (i > 0 && !isOperator(input[i])) { i--; }
-      print(i);
-      input = input.replaceRange(i,null,(i == 0 && !isOperator(input[i]))?("-"+input):(input[i] == "+" ?"-"+input.substring(i+1,input.length):input.substring(i+1,input.length)));
-    }});
+  void negative() => setState(() {
+        if (input.endsWith("(-")) {
+          input = input.replaceRange(input.length - 2, input.length, "");
+          return;
+        }
+        if (input.isEmpty ||
+            (input.isNotEmpty && isOperator(input[input.length - 1]))) {
+          input += "(-";
+          return;
+        }
+        if (!isOperator(input[input.length - 1])) {
+          int i = input.length - 1;
+          while (i > 0 && !isOperator(input[i])) {
+            i--;
+          }
+          input = input.replaceRange(
+              i,
+              null,
+              (i == 0 && !isOperator(input[i]))
+                  ? ("-" + input)
+                  : (input[i] == "+"
+                      ? "-" + input.substring(i + 1, input.length)
+                      : input.substring(i + 1, input.length)));
+        }
+      });
 
   ///Add Parenthses
   void parenthese() => setState(() {
@@ -155,6 +173,8 @@ class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+    //Orientation orientation = MediaQuery.of(context).orientation;
+
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -263,10 +283,10 @@ class _CalculatorState extends State<Calculator> {
                                             text: leftSide[index],
                                             onpressed: index == 0
                                                 ? () => clear()
-                                                : ( index == 4 
-                                                   ? () => negative()
-                                                   : () =>
-                                                    addNum(leftSide[index]))))),
+                                                : (index == 4
+                                                    ? () => negative()
+                                                    : () => addNum(
+                                                        leftSide[index]))))),
                                 Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -312,9 +332,12 @@ class _CalculatorState extends State<Calculator> {
                                 alignment: Alignment.center,
                                 child: Column(children: [
                                   Expanded(
-                                    child: ListView(
-                                      children: history,
-                                    ),
+                                    child: ListView.builder(
+                                        itemCount: history.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return history[index];
+                                        }),
                                   ),
                                   myButton(
                                       fontSize:
